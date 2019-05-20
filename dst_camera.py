@@ -6,7 +6,7 @@ import StringIO
 import numpy as np
 
 # 注意IP地址和端口号与前面的程序中的保持一致
-HOST, PORT = "192.168.0.113", 9999
+HOST, PORT = "10.5.3.187", 9999
 # 连接到服务器
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((HOST, PORT))
@@ -19,7 +19,7 @@ while True:
     msg = f.readline()
     if not msg:
         break
-    print len(msg), msg[-2]
+    print(len(msg), msg[-2])
     # 将'\-n'换回来成'\n'
     jpeg = msg.replace("\-n", "\n")
     buf = StringIO.StringIO(jpeg[0:-1])# 缓存数据

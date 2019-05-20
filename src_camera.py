@@ -11,7 +11,7 @@ cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 480)
 
 # 这里的HOST对应树莓派的IP地址（自己输入ifconfig查），端口号自己随便定一个即可，但注意后面的程序中要保持统一
-HOST, PORT = '192.168.0.113', 9999
+HOST, PORT = '10.5.3.187', 9999
 # 连接服务器
 sock =socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((HOST, PORT))
@@ -31,7 +31,7 @@ while True:
     jpeg = buf.getvalue()# 从buf中读出jpeg格式的图像
     buf.close()
     transfer = jpeg.replace('\n', '\-n')# 替换\n为\-n，因为后面传输时，终止的地方会加上\n，可以便于区分
-    print len(transfer), transfer[-1]
+    print(len(transfer), transfer[-1])
     sock.sendall(transfer + "\n")# 通过socket传到服务器
     # time.sleep(0.2)
 
