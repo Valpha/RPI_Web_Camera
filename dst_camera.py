@@ -1,8 +1,8 @@
 import cv2
 import socket
 import time
-import Image
-import StringIO
+from PIL import Image
+from io import StringIO
 import numpy as np
 
 # 注意IP地址和端口号与前面的程序中的保持一致
@@ -22,7 +22,7 @@ while True:
     print(len(msg), msg[-2])
     # 将'\-n'换回来成'\n'
     jpeg = msg.replace("\-n", "\n")
-    buf = StringIO.StringIO(jpeg[0:-1])# 缓存数据
+    buf = StringIO(jpeg[0:-1])# 缓存数据
     buf.seek(0)
     pi = Image.open(buf)# 使用PIL读取jpeg图像数据
     # img = np.zeros((640, 480, 3), np.uint8)

@@ -1,20 +1,20 @@
 import cv2
 import time
 import socket
-import Image
-import StringIO
+from PIL import Image
+import io
 
 # 获取摄像头
 cap = cv2.VideoCapture(0)
 # 调整采集图像大小为640*480
-cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 480)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
 
 # 这里的HOST对应树莓派的IP地址（自己输入ifconfig查），端口号自己随便定一个即可，但注意后面的程序中要保持统一
-HOST, PORT = '10.5.3.187', 9999
+HOST, PORT = '', 9999
 # 连接服务器
 sock =socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((HOST, PORT))
+sock.connect(('10.9.93.163', 9999))
 
 while True:
     # 获取一帧图像
@@ -26,7 +26,7 @@ while True:
 
     # 将opencv下的图像转换为PIL支持的格式
     pi = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    buf = StringIO.StringIO()# 缓存对象
+    buf = io.StringIO()# 缓存对象
     pi.save(buf, format='JPEG')# 将PIL下的图像压缩成jpeg格式，存入buf中
     jpeg = buf.getvalue()# 从buf中读出jpeg格式的图像
     buf.close()

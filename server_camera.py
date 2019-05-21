@@ -3,7 +3,7 @@ import time
 
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(("10.5.3.187", 9999))# 注意bind的这里，IP地址和端口号都要与前面的程序中一样
+sock.bind(("10.9.93.163", 9999))
 sock.listen(2)# 监听端口
 
 # 等待数据源端连接
