@@ -2,9 +2,10 @@ import cv2
 import socket
 import time
 from PIL import Image
+import io
 from io import StringIO
 import numpy as np
-
+from zerocopy import *
 # 注意IP地址和端口号与前面的程序中的保持一致
 HOST, PORT = "10.5.3.187", 9999
 # 连接到服务器
@@ -19,10 +20,10 @@ while True:
     msg = f.readline()
     if not msg:
         break
-    print(len(msg), msg[-2])
+    # print(len(msg), msg[-2])
     # 将'\-n'换回来成'\n'
     jpeg = msg.replace("\-n", "\n")
-    buf = StringIO(jpeg[0:-1])# 缓存数据
+    buf = io.BytesIO(jpeg[0:-1])# 缓存数据
     buf.seek(0)
     pi = Image.open(buf)# 使用PIL读取jpeg图像数据
     # img = np.zeros((640, 480, 3), np.uint8)

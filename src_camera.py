@@ -3,7 +3,7 @@ import time
 import socket
 from PIL import Image
 import io
-
+from zerocopy import *
 # 获取摄像头
 cap = cv2.VideoCapture(0)
 # 调整采集图像大小为640*480
@@ -26,13 +26,14 @@ while True:
 
     # 将opencv下的图像转换为PIL支持的格式
     pi = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    buf = io.StringIO()# 缓存对象
+    buf = io.BytesIO()# 缓存对象
     pi.save(buf, format='JPEG')# 将PIL下的图像压缩成jpeg格式，存入buf中
-    jpeg = buf.getvalue()# 从buf中读出jpeg格式的图像
+    jpeg = buf.getvalue()# 从buf中读出jpe格式的图像
     buf.close()
-    transfer = jpeg.replace('\n', '\-n')# 替换\n为\-n，因为后面传输时，终止的地方会加上\n，可以便于区分
-    print(len(transfer), transfer[-1])
-    sock.sendall(transfer + "\n")# 通过socket传到服务器
+    # transfer = jpeg.replace('\n', '\-n')# 替换\n为\-n，因为后面传输时，终止的地方会加上\n，可以便于区分
+    # print(len(transfer), transfer[-1])
+
+    sock.send(jpeg)# 通过socket传到服务器
     # time.sleep(0.2)
 
 sock.close()
